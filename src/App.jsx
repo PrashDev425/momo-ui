@@ -6,6 +6,9 @@ import Menu from "./pages/Menu"
 import Service from "./pages/Service"
 import AllergyAdvice from "./pages/AllergyAdvice"
 import Footer from "./components/Footer"
+import ProductDescription from "./pages/ProductDescription"
+import Cart from "./pages/Cart"
+import Payment from "./payment/Payment"
 
 function App() {
   return (
@@ -17,7 +20,9 @@ function App() {
         <Route path="/menu" element={<Menu />} />
         <Route path="/service" element={<Service />} />
         <Route path="/allergy-advice" element={<AllergyAdvice />} />
-        <Route path="/cart" element={<AllergyAdvice />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/product-description/:id" element={<ProductDescription />} />
       </Routes>
       <Footer />
     </>

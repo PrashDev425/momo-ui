@@ -1,5 +1,5 @@
 const AllergyAdvice = () => {
-    return <></>
+    return <p className="font-Roboto">Allergy Advise</p>
 }
 
 export default AllergyAdvice;

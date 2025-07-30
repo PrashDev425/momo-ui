@@ -3,8 +3,15 @@ import logo from '../assets/momo.svg';
 import { FaFacebookF } from "react-icons/fa6";
 import { RiTiktokFill } from "react-icons/ri";
 import { FaInstagramSquare, FaRegUserCircle } from "react-icons/fa";
-
+import { CartContext } from "../contexts/CartProvider";
+import { useContext } from "react";
+import { IoMdCart } from "react-icons/io";
 const Navigation = () => {
+    const {state} = useContext(CartContext);
+    const {cartItem} = state;
+    let totalQty = cartItem.reduce((acc,item) => {
+        return acc + item.qty;
+    },0)
     return (
         <div className="border flex items-center justify-around p-2 text-sm">
 
@@ -18,7 +25,6 @@ const Navigation = () => {
                 <NavLink className="font-bold" to="/menu">Our Menu</NavLink>
                 <NavLink className="font-bold" to="/services">Services</NavLink>
                 <NavLink className="font-bold" to="/allergy-advice">Allergy Advice</NavLink>
-                <NavLink className="font-bold" to="/cart">Cart</NavLink>
                 <NavLink className="font-bold" to="/login">Login</NavLink>
                 <NavLink className="font-bold" to="/register">Register</NavLink>
                 <button className="text-[#D95103] font-bold">Logout</button>
@@ -33,6 +39,12 @@ const Navigation = () => {
                     className="bg-[#D95103] px-3 py-1 text-white rounded-3xl"
                 >
                     Contact
+                </NavLink>
+                                <NavLink className="" to="/cart">
+                    <p className="bg-gray-200 w-4 h-4 relative top-1 left-1 rounded-2xl text-[10px] text-center">
+                        {totalQty}
+                    </p>
+                    <IoMdCart size={20} color="red"/>
                 </NavLink>
             </div>
 

@@ -1,5 +1,5 @@
 import { MdArrowBack, MdArrowForward, MdArrowRightAlt, MdPlayArrow } from "react-icons/md";
-import { Link, NavLink } from "react-router-dom";
+import { Link, Navigate, NavLink } from "react-router-dom";
 import logo from '../assets/momo.svg';
 import paintbg from "../assets/paint.svg"
 import momoplate from "../assets/momo-plate.png"
@@ -127,7 +127,7 @@ const Home = () => {
             filterProduct.length > 0 ? (
               <div className="flex flex-wrap justify-center gap-5 p-5">
                 {filterProduct.map((item) => (
-                  <div key={item.id} className="w-48 flex flex-col items-center">
+                  <div onClick={()=>Navigate(`/product-description/${item.id}`)} key={item.id} className="w-48 flex flex-col items-center">
                     <img src={item.image} width={"100px"} alt="" />
                     <h2>{item.name}</h2>
                     <p>Rs {Math.floor(Math.random() * (1000 - 100 + 1)) + 100}</p>
