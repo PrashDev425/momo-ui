@@ -104,7 +104,7 @@ const Payment = () => {
             type="hidden"
             id="success_url"
             name="success_url"
-            value="https://developer.esewa.com.np/success"
+            value="http://localhost:5173/success"
             required
           />
         </div>
@@ -114,7 +114,7 @@ const Payment = () => {
             type="hidden"
             id="failure_url"
             name="failure_url"
-            value="https://developer.esewa.com.np/failure"
+            value="http://localhost:5173/failure"
             required
           />
         </div>
