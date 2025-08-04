@@ -4,14 +4,17 @@ import { FaFacebookF } from "react-icons/fa6";
 import { RiTiktokFill } from "react-icons/ri";
 import { FaInstagramSquare, FaRegUserCircle } from "react-icons/fa";
 import { CartContext } from "../contexts/CartProvider";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { IoMdCart } from "react-icons/io";
+import { useAuth0 } from "@auth0/auth0-react";
 const Navigation = () => {
-    const {state} = useContext(CartContext);
-    const {cartItem} = state;
-    let totalQty = cartItem.reduce((acc,item) => {
+    const { user, isAuthenticated, isLoading, logout } = useAuth0();
+    const [isShow, setIsShow] = useState(false);
+    const { state } = useContext(CartContext);
+    const { cartItem } = state;
+    let totalQty = cartItem.reduce((acc, item) => {
         return acc + item.qty;
-    },0)
+    }, 0)
     return (
         <div className="border flex items-center justify-around p-2 text-sm">
 
@@ -25,9 +28,10 @@ const Navigation = () => {
                 <NavLink className="font-bold" to="/menu">Our Menu</NavLink>
                 <NavLink className="font-bold" to="/services">Services</NavLink>
                 <NavLink className="font-bold" to="/allergy-advice">Allergy Advice</NavLink>
-                <NavLink className="font-bold" to="/login">Login</NavLink>
-                <NavLink className="font-bold" to="/register">Register</NavLink>
-                <button className="text-[#D95103] font-bold">Logout</button>
+                {/* <NavLink className="font-bold" to="/login">Login</NavLink>
+                <NavLink className="font-bold" to="/register">Register</NavLink> */}
+                <NavLink className="font-bold" to="/demo">demo</NavLink>
+                <button className="text-[#D95103] font-bold" onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</button>
             </div>
 
             <div className="flex items-center gap-2">
@@ -40,16 +44,29 @@ const Navigation = () => {
                 >
                     Contact
                 </NavLink>
-                                <NavLink className="" to="/cart">
+                <NavLink className="" to="/cart">
                     <p className="bg-gray-200 w-4 h-4 relative top-1 left-1 rounded-2xl text-[10px] text-center">
                         {totalQty}
                     </p>
-                    <IoMdCart size={20} color="red"/>
+                    <IoMdCart size={20} color="red" />
                 </NavLink>
             </div>
 
-            <div>
-                <NavLink to="/profile"><FaRegUserCircle size={20} /></NavLink>
+            <div className="relative" onClick={() => setIsShow(!isShow)}>
+                {isAuthenticated ? (<NavLink to="/profile"><img className="h-7 w-7 rounded-fill" src={user?.picture} alt="" /></NavLink>) : (<FaRegUserCircle size={20} />)}
+                {isShow && (
+                    <div className="absolute flex flex-col p-3 z-50 bg-gray-200 shadow-2xl rounded-2xl">
+                        {isAuthenticated ? (
+                            <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>Logout</button>
+                        ) : (
+                            <div>
+                                <NavLink to="login">Login</NavLink>
+                                <br/>
+                                <NavLink to="register">Register</NavLink>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

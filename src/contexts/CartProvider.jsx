@@ -1,10 +1,15 @@
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { Bounce, toast } from "react-toastify";
 
 export const CartContext = createContext()
 
+const getProduct = () =>{
+    let product = localStorage.getItem("cart");
+    return product? JSON.parse(product):[];
+} 
+
 const initialState = {
-    cartItem: [],
+    cartItem: getProduct(),
 }
 
 const cartReducer = (state, action) => {
@@ -97,6 +102,9 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
     const [state, dispatch] = useReducer(cartReducer, initialState);
+    useEffect(() => {
+        localStorage.setItem("cart",JSON.stringify(state.cartItem));
+    },[state.cartItem])
     return (
         <CartContext value={{ state, dispatch }}>
             {children}
