@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import { CartContext } from '../contexts/CartProvider';
 
 const Success = () => {
     const [searchParms] = useSearchParams();
+    const { dispatch } = useContext(CartContext);
+    useEffect(() => {
+        dispatch({ type: "CLEARCART" });
+    }, [dispatch]);
     let data = searchParms.get("data");
     data = JSON.parse(atob(data));
     console.log(data);
